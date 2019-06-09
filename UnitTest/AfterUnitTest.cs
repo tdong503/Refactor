@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using Kata.Refactor.Before;
+using Kata.Refactor.After;
 using Xunit;
 using Moq;
 
 namespace UnitTest
 {
-    public class BeforeUnitTest
+    public class AfterUnitTest
     {
         private Mock<ISessionService> _sessionSerivce = new Mock<ISessionService>();
         
@@ -57,7 +57,7 @@ namespace UnitTest
                 "GD03ABC005FAKE"
             };
 
-            var actual = keysFilter.Filter(testData, true);
+            var actual = keysFilter.FilterGoldenKeys(testData);
             Assert.Equal(5, actual.Count);
             Assert.Equal("GD01ABC001", actual.First());
             Assert.Equal("GD02ABC002", actual[1]);
@@ -83,20 +83,11 @@ namespace UnitTest
                 "CP01ABC006",
             };
 
-            var actual = keysFilter.Filter(testData, false);
+            var actual = keysFilter.FilterNonGoldenKeys(testData);
             Assert.Equal(5, actual.Count);
             Assert.Equal("SV01ABC001", actual.First());
             Assert.Equal("SV01ABC002", actual[1]);
             Assert.Equal("SV03ABC005FAKE", actual[2]);
         }
-//
-//        [Fact]
-//        public void TestValidateGoldenKeys()
-//        {
-//            var keysFilter = new KeysFilter(_sessionSerivce.Object);
-//            var actual = keysFilter.ValidateGoldenKeys(_goldenKeys);
-//            
-//            Assert.Equal("GD01ABC001", actual.First());
-//        }
     }
 }
